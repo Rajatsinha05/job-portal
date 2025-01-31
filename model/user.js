@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema(
     password: String,
     profile_picture: String,
     number: String,
+    gender: { type: String, enum: ["male", "female", "other"] },
     role: {
       type: String,
       enum: ["ADMIN", "HR", "CANDIDATE"],
@@ -20,7 +21,6 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-
-const User = mongoose.model("User",userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;

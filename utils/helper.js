@@ -16,7 +16,7 @@ const hashPassword = async (password) => {
 };
 
 const compare = async (hash, password) => {
-  return await bcrypt.compare(hash, password);
+  return await bcrypt.compare(password, hash);
 };
 
 module.exports = { genereateToken, compare, hashPassword };

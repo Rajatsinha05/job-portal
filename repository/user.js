@@ -15,13 +15,17 @@ exports.getUserById = async (id) => {
   return user;
 };
 
-exports.updateUser = async (user, id) => {
-  let user = await User.findByIdAndUpdate(id, user, { new: true });
+exports.updateUser = async (id, userdata) => {
+  let user = await User.findByIdAndUpdate(id, userdata, { new: true });
   return user;
 };
 
 exports.deleteUser = async (id) => {
-  let user = await User.findByIdAndDelete(id);
+  let user = await User.findByIdAndUpdate(
+    id,
+    { isActive: false },
+    { new: true }
+  );
   return user;
 };
 exports.getUsers = async () => {

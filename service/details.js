@@ -11,8 +11,7 @@ exports.getUserDetails = async (userId) => {
 
 exports.createUserDetails = async (payload) => {
   try {
-    let userid = req.user.id;
-    payload.user = userid;
+    
     let userdata = await userDetailRepository.createDetail(payload);
     return userdata;
   } catch (error) {

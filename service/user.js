@@ -1,5 +1,6 @@
 const userRepository = require("../repository/user");
 const { hashPassword, genereateToken, compare } = require("../utils/helper");
+const userDetailService = require("./details");
 exports.createUser = async (data) => {
   let user = await userRepository.getUserByEmail(data.email);
   if (user) {
@@ -15,6 +16,7 @@ exports.createUser = async (data) => {
     role: user.role,
     name: user.name,
   });
+
 
   return token;
 };
@@ -60,10 +62,14 @@ exports.deleteUser = async (id) => {
 
 exports.getUserById = async (id) => {
   let user = await userRepository.getUserById(id);
+  let details = await userDetailService.getUserDetails(id)
   if (!user) {
     throw new Error("invalid id");
   }
-  return user;
+  return {
+    user,
+    details
+  };
 };
 
 exports.findUserByQuery = async (query) => {

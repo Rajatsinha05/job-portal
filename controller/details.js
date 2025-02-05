@@ -1,6 +1,8 @@
 const userDetailService = require("../service/details");
 exports.createUser = async (req, res) => {
   try {
+    let user = req.user.id;
+    req.body.user = user;
     let userDetail = await userDetailService.createUserDetails(req.body);
     res.send(userDetail);
   } catch (error) {

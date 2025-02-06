@@ -1,6 +1,9 @@
 const userRepository = require("../repository/user");
 const { hashPassword, genereateToken, compare } = require("../utils/helper");
+const sendMail = require("../utils/mail");
 const userDetailService = require("./details");
+
+let map = new Map();
 exports.createUser = async (data) => {
   let user = await userRepository.getUserByEmail(data.email);
   if (user) {
@@ -16,8 +19,10 @@ exports.createUser = async (data) => {
     role: user.role,
     name: user.name,
   });
-
-
+  let otp = Math.round(Math.random() * 10000);
+  map.set(token, otp);
+  let url = `<div> <a href=http://localhost:8091/api/v1/users/verify/${token}/${otp} > click to verify </a> </div>`;
+  await sendMail(user.email, "verify", url);
   return token;
 };
 
@@ -42,7 +47,6 @@ exports.login = async (data) => {
 
 exports.updateUser = async (id, data) => {
   let user = await userRepository.getUserById(id);
- 
 
   if (!user) {
     throw new Error("invalid id");
@@ -62,13 +66,13 @@ exports.deleteUser = async (id) => {
 
 exports.getUserById = async (id) => {
   let user = await userRepository.getUserById(id);
-  let details = await userDetailService.getUserDetails(id)
+  let details = await userDetailService.getUserDetails(id);
   if (!user) {
     throw new Error("invalid id");
   }
   return {
     user,
-    details
+    details,
   };
 };
 

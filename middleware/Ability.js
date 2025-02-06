@@ -1,12 +1,14 @@
-
-const Ability=(req,res,next,roles=[])=>{
-    let role=req.user.role;
-    if(roles.includes(role)){
-        next();
+const Ability = (roles = []) => {
+  return (req, res, next) => {
+    let role = req.user.role;
+    if (roles.includes(role)) {
+      return next();
+    } else {
+      return res
+        .status(403)
+        .send({ message: "You do not have permission to access this" });
     }
-    else{
-        
-    }
+  };
+};
 
-
-}
+module.exports = Ability;

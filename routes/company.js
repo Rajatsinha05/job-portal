@@ -23,4 +23,9 @@ router.delete(
   companyController.deleteCompany
 );
 
+router.get(
+  "/admin/unverified",
+  Ability(["ADMIN"]),
+  companyController.getUnverified
+);
 module.exports = router;

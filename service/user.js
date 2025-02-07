@@ -1,5 +1,10 @@
 const userRepository = require("../repository/user");
-const { hashPassword, genereateToken, compare } = require("../utils/helper");
+const {
+  hashPassword,
+  genereateToken,
+  compare,
+  decodeToken,
+} = require("../utils/helper");
 const sendMail = require("../utils/mail");
 const userDetailService = require("./details");
 
@@ -26,6 +31,20 @@ exports.createUser = async (data) => {
   return token;
 };
 
+exports.verifyEmail = async (token, otp) => {
+  let userOtp = map.get(token);
+  if (userOtp == otp) {
+    try {
+      let user = await decodeToken(token);
+      user = await userRepository.updateUser(user.id, { isVerified: true });
+      return user;
+    } catch (error) {
+      throw new Error("Could not decode token");
+    }
+  } else {
+    throw new Error("Invalid otp");
+  }
+};
 exports.login = async (data) => {
   let user = await userRepository.getUserByEmail(data.email);
   if (!user) {

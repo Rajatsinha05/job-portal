@@ -8,5 +8,5 @@ routes.patch("/:userId", userController.updateUser);
 routes.delete("/:userId", userController.deleteUser);
 routes.get("/info/:userId", userController.getUSerById);
 routes.get("/", Ability(["ADMIN"]), userController.usersByQuery);
-
+routes.get("/verify/:token/:otp", userController.verifyEmail);
 module.exports = routes;

@@ -5,7 +5,11 @@ const Ability = require("../middleware/Ability");
 const router = express.Router();
 
 // Route to create a new company
-router.post("/create", Ability(["HR"]), companyController.createCompany);
+router.post(
+  "/create",
+  Ability(["HR", "ADMIN"]),
+  companyController.createCompany
+);
 
 // Route to get all companies
 router.get("/", Ability(["ADMIN"]), companyController.getAllCompany);

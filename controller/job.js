@@ -1,8 +1,14 @@
 const jobService = require("../service/jobs");
 // Create a new job
+const companyService = require("../service/company");
 exports.createJob = async (req, res) => {
   try {
     req.body.userId = req.user.id;
+    let company = await companyService.getCompanyByUserId(req.user.id);
+    if (!company) {
+      return res.status(404).send({ msg: "company not found" });
+    }
+    req.body.companyId = company.id;
     const job = await jobService.create(req.body);
     res.status(201).json({ success: true, data: job });
   } catch (error) {

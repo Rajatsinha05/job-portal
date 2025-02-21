@@ -25,3 +25,8 @@ exports.deleteCompany=async(id)=>{
     let company=await Company.findByIdAndDelete(id)
     return company
 }
+
+exports.getCompanyByUserId=async(userId)=>{
+    let company=await Company.findOne({userId})
+    return company
+}

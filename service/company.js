@@ -28,3 +28,8 @@ exports.getAllUnverified = async () => {
   let company = await companyRepository.getAllCompany({ isVerified: false });
   return company;
 };
+
+exports.getCompanyByUserId = async (userId) => {
+  let company = await companyRepository.getCompanyByUserId(userId);
+  return company;
+}

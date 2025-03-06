@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/", ApplicationController.getAllApplications);
 router.post("/", ApplicationController.createApplication);
 router.patch("/:id", ApplicationController.updateApplication);
-router.get("/user/:userId", ApplicationController.getApplicationsByUserId);
+router.get("/user", ApplicationController.getApplicationsByUserId);
 router.get("/job/:jobId", ApplicationController.getApplicationsByJobId);
 
 module.exports = router;

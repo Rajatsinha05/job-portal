@@ -16,8 +16,16 @@ const ApplicationService = {
     return app;
   },
   update: async (id, payload) => {
-    let app = await Application.findByIdAndUpdate(id, payload);
-    return app;
+    console.log(id, payload);
+
+    try {
+      let app = await Application.findByIdAndUpdate(id, payload, { new: true });
+   
+
+      return app;
+    } catch (error) {
+     
+    }
   },
   getByUserId: async (userId) => {
     let app = await Application.find({ userId: userId });

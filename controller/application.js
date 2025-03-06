@@ -27,6 +27,8 @@ const ApplicationController = {
     try {
       const { id } = req.params;
       const payload = req.body;
+      console.log("id,pay", id, req.body);
+
       const updatedApplication = await ApplicationService.update(id, payload);
       res.status(200).json(updatedApplication);
     } catch (error) {
@@ -36,8 +38,9 @@ const ApplicationController = {
 
   getApplicationsByUserId: async (req, res) => {
     try {
-      const { userId } = req.params;
-      const applications = await ApplicationService.getByUserId(userId);
+      const { id } = req.user;
+
+      const applications = await ApplicationService.getByUserId(id);
       res.status(200).json(applications);
     } catch (error) {
       res.status(500).json({ message: error.message });
